@@ -1,17 +1,22 @@
-create table user (
-  id int unsigned primary key auto_increment not null,
-  email varchar(255) not null unique,
-  password varchar(255) not null
+CREATE TABLE user (
+  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE categorie (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nom VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE aliment (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nom_aliment VARCHAR(255) NOT NULL,
-  categorie_aliment VARCHAR(255) NOT NULL,
+  categorie_aliment INT NOT NULL,
   portion_standard INT,
-  empreinte_carbone DECIMAL(10, 2),
-  consommation_eau DECIMAL(10, 2),
+  empreinte_carbone DECIMAL(10,2),
+  consommation_eau DECIMAL(10,2),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (categorie_aliment) REFERENCES categorie(id) ON DELETE CASCADE
 );
-

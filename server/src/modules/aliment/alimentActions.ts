@@ -59,8 +59,13 @@ const edit: RequestHandler = async (req, res, next) => {
 const remove: RequestHandler = async (req, res, next) => {
   const alimentId = Number(req.params.id);
   try {
+    const aliment = await alimentRepository.read(alimentId);
+    if (!aliment) {
+      res.status(404).json({ error: "Aliment non trouvé" });
+      return;
+    }
     await alimentRepository.delete(alimentId);
-    res.sendStatus(204);
+    res.status(204).send();
   } catch (err) {
     next(err);
   }
