@@ -4,18 +4,14 @@ create table user (
   password varchar(255) not null
 );
 
-create table item (
-  id int unsigned primary key auto_increment not null,
-  title varchar(255) not null,
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id)
+CREATE TABLE aliment (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nom_aliment VARCHAR(255) NOT NULL,
+  categorie_aliment VARCHAR(255) NOT NULL,
+  portion_standard INT,
+  empreinte_carbone DECIMAL(10, 2),
+  consommation_eau DECIMAL(10, 2),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-insert into user(id, email, password)
-values
-  (1, "jdoe@mail.com", "123456");
-
-insert into item(id, title, user_id)
-values
-  (1, "Stuff", 1),
-  (2, "Doodads", 1);

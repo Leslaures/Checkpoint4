@@ -6,12 +6,14 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-// Define item-related routes
-import itemActions from "./modules/item/itemActions";
+// Define aliment-related routes
+import alimentActions from "./modules/aliment/alimentActions";
 
-router.get("/api/items", itemActions.browse);
-router.get("/api/items/:id", itemActions.read);
-router.post("/api/items", itemActions.add);
+router.get("/api/aliments", alimentActions.browse);
+router.get("/api/aliments/:id", alimentActions.read);
+router.post("/api/aliments", alimentActions.add);
+router.put("/api/aliments/:id", alimentActions.edit);
+router.delete("/api/aliments/:id", alimentActions.remove);
 
 /* ************************************************************************* */
 
