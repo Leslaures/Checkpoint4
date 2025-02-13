@@ -1,0 +1,84 @@
+.impact-page {
+  margin: 10px;
+}
+h1 {
+  color: #000;
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: "Poppins", sans-serif;
+}
+h2 {
+  font-size: 1rem;
+  color: #5a5057;
+  font-weight: 300;
+}
+.impact-co2-container {
+  border-radius: 1rem;
+  border: 2px solid #afe0dd;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+  background-color: #fff;
+}
+.impact-co2-element {
+  border: 2px solid #afe0dd;
+  padding: 16px 18px 16px 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.impact-co2-element-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+}
+.ecv {
+  font-size: 14px;
+  color: #26827c;
+  font-weight: 600;
+}
+.name {
+  font-size: 14px;
+}
+.button-container {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+}
+.save-button {
+  font-size: 12px;
+  text-decoration: none;
+  appearance: none;
+  background-color: #26827c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px 8px 10px;
+  width: 90px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  font-family: "Poppins", sans-serif;
+}
+.modify-button {
+  font-size: 12px;
+  background-color: transparent;
+  border: 2px solid #afe0dd;
+  border-radius: 8px;
+  padding: 8px 10px 8px 10px;
+  width: 90px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #26827c;
+  font-family: "Poppins", sans-serif;
+}
+.delete-button {
+  font-size: 12px;
+  background-color: transparent;
+  border: 2px solid #fcb0a4;
+  border-radius: 8px;
+  padding: 8px 10px 8px 10px;
+  width: 90px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #b31800;
+  font-family: "Poppins", sans-serif;
+}

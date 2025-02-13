@@ -1,38 +1,30 @@
-CREATE TABLE user (
-  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
+CREATE TABLE thematiques (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE categorie (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nom VARCHAR(255) NOT NULL UNIQUE
-);
+-- Insertion des thématiques dans la table
+INSERT INTO thematiques (id, name, slug) VALUES
+(1, 'Numérique', 'numerique'),
+(2, 'Alimentation', 'alimentation'),
+(3, 'Boisson', 'boisson'),
+(4, 'Transport', 'transport'),
+(5, 'Habillement', 'habillement'),
+(6, 'Électroménager', 'electromenager'),
+(7, 'Mobilier', 'mobilier'),
+(8, 'Chauffage', 'chauffage'),
+(9, 'Fruits et légumes', 'fruitsetlegumes'),
+(10, 'Usage numérique', 'usagenumerique'),
+(13, 'Cas pratiques', 'caspratiques');
 
-CREATE TABLE aliment (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nom_aliment VARCHAR(255) NOT NULL,
-  categorie_aliment INT NOT NULL,
-  portion_standard INT,
-  empreinte_carbone DECIMAL(10,2),
-  consommation_eau DECIMAL(10,2),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (categorie_aliment) REFERENCES categorie(id) ON DELETE CASCADE
-);
-
-CREATE TABLE recette (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nom_recette VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
-CREATE TABLE recette_aliment (
-  id_recette INT NOT NULL,
-  id_aliment INT NOT NULL,
-  quantite INT NOT NULL,   
-  PRIMARY KEY (id_recette, id_aliment),
-  FOREIGN KEY (id_recette) REFERENCES recette(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_aliment) REFERENCES aliment(id) ON DELETE CASCADE
+CREATE TABLE elements (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    ecv DECIMAL(10,3) NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    thematique_id INT NOT NULL,
+    Foreign Key (thematique_id) REFERENCES thematiques(id) ON DELETE CASCADE
 );
