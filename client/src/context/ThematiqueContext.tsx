@@ -9,7 +9,7 @@ import {
 interface Element {
   slug: string;
   name: string;
-  ecv: number;
+  ecv: string;
 }
 
 interface Thematique {

@@ -1,24 +1,53 @@
 import { useEffect, useState } from "react";
-import ImpactCo2Element from "../components/ImpactCo2Element.tsx";
+import ImpactCo2Element from "../components/ImpactCo2Element";
 import "../styles/ImpactPage.css";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+
+interface Thematique {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+interface Element {
+  name: string;
+  slug: string;
+  ecv: string;
+}
+
+function TabPanel(props: {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Box
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </Box>
+  );
+}
 
 function ImpactPage() {
-  interface Thematique {
-    id: number;
-    name: string;
-    slug: string;
-  }
-
-  interface Element {
-    name: string;
-    slug: string;
-    ecv: number;
-  }
-
   const [thematiques, setThematiques] = useState<Thematique[]>([]);
   const [elements, setElements] = useState<Element[]>([]);
   const [selectedThematique, setSelectedThematique] =
     useState<Thematique | null>(null);
+  const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
     async function fetchThematiques() {
@@ -52,53 +81,56 @@ function ImpactPage() {
     }
   }, [selectedThematique]);
 
-  const sortedElements = [...elements].sort((a, b) => a.ecv - b.ecv);
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
+    setSelectedThematique(thematiques[newValue]);
+  };
+
+  const sortedElements = [...elements].sort(
+    (a, b) => Number.parseFloat(a.ecv) - Number.parseFloat(b.ecv),
+  );
 
   return (
     <div className="impact-page">
       <h1>Impact CO₂</h1>
       <h2>Connaitre l'impact de nos activités sur la planète</h2>
-      <section className="impact-co2-container">
-        <label htmlFor="thematique-select">Sélectionnez une thématique :</label>
-        <select
-          id="thematique-select"
-          value={selectedThematique ? selectedThematique.id : ""}
-          onChange={(e) => {
-            const selected = thematiques.find(
-              (thematique) => thematique.id === Number.parseInt(e.target.value),
-            );
-            setSelectedThematique(selected || null);
-          }}
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          aria-label="thématiques tabs"
+          variant="scrollable"
+          scrollButtons={true}
+          allowScrollButtonsMobile
         >
-          <option value="">Sélectionner une thématique</option>
           {thematiques.map((thematique) => (
-            <option key={thematique.id} value={thematique.id}>
-              {thematique.name}
-            </option>
+            <Tab key={thematique.id} label={thematique.name} />
           ))}
-        </select>
-
-        {elements.length > 0 && (
-          <div>
-            <h2>Produits associés à "{selectedThematique?.name}"</h2>
-            <ul>
-              {sortedElements.map((element) => (
-                <>
-                  <ImpactCo2Element
-                    key={element.slug}
-                    element={element}
-                    selectedThematique={selectedThematique}
-                  />
-                </>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {elements.length === 0 && selectedThematique && (
-          <p>Aucun produit disponible pour cette thématique.</p>
-        )}
-      </section>
+        </Tabs>
+      </Box>
+      {thematiques.map((thematique, index) => (
+        <TabPanel key={thematique.id} value={tabIndex} index={index}>
+          {elements.length > 0 ? (
+            <div>
+              <h2>Produits associés à "{thematique.name}"</h2>
+              <ul>
+                {sortedElements.map(
+                  (element) =>
+                    selectedThematique && (
+                      <ImpactCo2Element
+                        key={element.slug}
+                        element={element}
+                        selectedThematique={selectedThematique}
+                      />
+                    ),
+                )}
+              </ul>
+            </div>
+          ) : (
+            <p>Aucun produit disponible pour cette thématique.</p>
+          )}
+        </TabPanel>
+      ))}
     </div>
   );
 }

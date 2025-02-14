@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 interface Element {
   name: string;
   slug: string;
-  ecv: number;
+  ecv: string;
 }
 
 interface Thematique {
@@ -41,7 +41,7 @@ function ImpactCo2Element({
           );
           setEditedElement({
             ...saved,
-            ecv: Number(saved.ecv) || 0, // S'assurer que ecv est un nombre
+            ecv: saved.ecv,
           });
         }
         console.info("isElementSaved =", isElementSaved);
@@ -161,14 +161,15 @@ function ImpactCo2Element({
   };
 
   /* Formatage de l'ECV */
-  const formatEcv = (ecv: number) => {
-    if (typeof ecv !== "number") {
+  const formatEcv = (ecv: string) => {
+    const ecvNumber = Number.parseFloat(ecv);
+    if (Number.isNaN(ecvNumber)) {
       return "N/A";
     }
     if (selectedThematique?.name === "Transport") {
-      return `${(ecv * 1000).toFixed(0)} g CO₂e`;
+      return `${(ecvNumber * 1000).toFixed(0)} g CO₂e`;
     }
-    return `${ecv.toFixed(2)} kg CO₂e`;
+    return `${ecvNumber.toFixed(2)} kg CO₂e`;
   };
 
   return (
@@ -179,51 +180,221 @@ function ImpactCo2Element({
         alt={element.slug}
         style={{ width: 48, height: 48 }}
       />
+
       {selectedThematique?.name === "Alimentation" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{element.name}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
+
       {selectedThematique?.name === "Numérique" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
       {selectedThematique?.name === "Boisson" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par litre de ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
       {selectedThematique?.name === "Transport" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par km parcouru en ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
       {selectedThematique?.name === "Habillement" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
       {selectedThematique?.name === "Électroménager" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
       {selectedThematique?.name === "Mobilier" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
@@ -234,17 +405,96 @@ function ImpactCo2Element({
         </div>
       )}
 
+      {selectedThematique?.name === "Chauffage" && (
+        <div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
+        </div>
+      )}
+
       {selectedThematique?.name === "Fruits et légumes" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par kilo de ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
       {selectedThematique?.name === "Usage numérique" && (
         <div>
-          <div className="ecv">{formatEcv(element.ecv)}</div>
-          <div className="name">{`par ${element.name}`}</div>
+          {isEditing ? (
+            <>
+              <input
+                type="number"
+                value={editedElement.ecv}
+                onChange={(e) =>
+                  setEditedElement({
+                    ...editedElement,
+                    ecv: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editedElement.name}
+                onChange={(e) =>
+                  setEditedElement({ ...editedElement, name: e.target.value })
+                }
+              />
+            </>
+          ) : (
+            <>
+              <div className="ecv">{formatEcv(editedElement.ecv)}</div>
+              <div className="name">{`pour ${editedElement.name}`}</div>
+            </>
+          )}
         </div>
       )}
 
@@ -258,7 +508,7 @@ function ImpactCo2Element({
                 onChange={(e) =>
                   setEditedElement({
                     ...editedElement,
-                    ecv: e.target.value ? Number.parseFloat(e.target.value) : 0,
+                    ecv: e.target.value,
                   })
                 }
               />

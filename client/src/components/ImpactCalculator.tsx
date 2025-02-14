@@ -8,7 +8,7 @@ interface UserInput {
 interface Element {
   slug: string;
   name: string;
-  ecv: number;
+  ecv: string;
 }
 
 interface Thematique {
@@ -23,6 +23,7 @@ interface ImpactCalculatorProps {
 }
 
 function ImpactCalculator({ thematique }: ImpactCalculatorProps) {
+  console.info(thematique);
   const [userInput, setUserInput] = useState<UserInput>({});
 
   const handleChange = (slug: string, value: string) => {
@@ -34,12 +35,11 @@ function ImpactCalculator({ thematique }: ImpactCalculatorProps) {
 
   const totalImpact = thematique.elements.reduce((acc, element) => {
     const quantity = userInput[element.slug] || 0;
-    return acc + element.ecv * quantity;
+    return acc + Number.parseFloat(element.ecv) * quantity;
   }, 0);
 
   return (
     <div className="calculator">
-      <h3>{thematique.name}</h3>
       {thematique.elements.map((element) => (
         <div key={element.slug}>
           <label htmlFor={element.slug}>{element.name}</label>
@@ -51,7 +51,9 @@ function ImpactCalculator({ thematique }: ImpactCalculatorProps) {
           />
           <span>
             kg CO₂e :{" "}
-            {typeof element.ecv === "number" ? element.ecv.toFixed(2) : "N/A"}
+            {typeof Number.parseFloat(element.ecv) === "number"
+              ? Number.parseFloat(element.ecv).toFixed(2)
+              : "N/A"}
           </span>
         </div>
       ))}

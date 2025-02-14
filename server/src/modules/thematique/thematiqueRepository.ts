@@ -4,7 +4,7 @@ import type { Result, Rows } from "../../../database/client";
 type Element = {
   name: string;
   slug: string;
-  ecv: number;
+  ecv: string;
   image_url: string;
   category: string;
   thematique_id: number;

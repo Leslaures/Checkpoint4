@@ -12,7 +12,9 @@ const thematique = [
     id: 1,
     name: "Example Thematique",
     slug: "example_thematique",
-    elements: [{ slug: "example_element", name: "Example Element", ecv: 1.0 }],
+    elements: [
+      { slug: "example_element", name: "Example Element", ecv: "1.0" },
+    ],
   },
 ];
 
